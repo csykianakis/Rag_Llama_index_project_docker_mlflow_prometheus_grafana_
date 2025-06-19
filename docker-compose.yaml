@@ -9,11 +9,12 @@ services:
       - mlflow
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - HF_TOKEN=${HF_TOKEN}
 
   mlflow:
     image: ghcr.io/mlflow/mlflow:latest
     ports:
-      - "5055:5000"
+      - "5056:5000"
     environment:
       - MLFLOW_TRACKING_URI=http://0.0.0.0:5000
     command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlflow

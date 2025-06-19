@@ -1,6 +1,7 @@
 import os
 import tempfile
 from pathlib import Path
+from dotenv import load_dotenv
 from flask import Flask, request, render_template
 from huggingface_hub import login
 from llama_index.core import Settings
@@ -20,7 +21,12 @@ metrics = PrometheusMetrics(app, path="/metrics")
 mlflow.set_tracking_uri("http://mlflow:5000")
 mlflow.set_experiment("PDF_QA_Experiment")
 
-login("...") # replace 'your_huggingface_token' with your personal huggingface token (is free to get it)
+load_dotenv()
+hf_token = os.getenv("HF_TOKEN")
+login(hf_token)
+
+#'your_huggingface_token' with your personal huggingface token (is free to get it)
+
 
 # LlamaIndex Settings
 Settings.llm = HuggingFaceLLM(
